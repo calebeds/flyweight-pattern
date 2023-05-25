@@ -1,8 +1,7 @@
 package factory;
 
-import robots.LargeRobot;
+import robots.Robot;
 import robots.RobotInterface;
-import robots.SmallRobot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,24 +13,24 @@ public class RobotFactory {
         return shapes.size();
     }
 
-    public RobotInterface getRobotFromFactory(String robotCategoryName) throws Exception {
+    public RobotInterface getRobotFromFactory(String robotType) throws Exception {
         RobotInterface robotCategory = null;
-        if(shapes.containsKey(robotCategoryName)) {
-            robotCategory = shapes.get(robotCategoryName);
+        if(shapes.containsKey(robotType)) {
+            robotCategory = shapes.get(robotType);
         } else {
-            switch (robotCategoryName) {
-                case "small":
-                    System.out.println("We do not have Small Robot. So we are creating a Small Robot.");
-                    robotCategory = new SmallRobot();
-                    shapes.put("small", robotCategory);
+            switch (robotType) {
+                case "king":
+                    System.out.println("We do not have a King Robot. So we are creating a King Robot.");
+                    robotCategory = new Robot("king");
+                    shapes.put("king", robotCategory);
                     break;
-                case "large":
-                    System.out.println("We do not have Large Robot. So we are creating a Large Robot.");
-                    robotCategory = new LargeRobot();
-                    shapes.put("large", robotCategory);
+                case "queen":
+                    System.out.println("We do not have a Queen Robot. So we are creating a Queen Robot.");
+                    robotCategory = new Robot("queen");
+                    shapes.put("queen", robotCategory);
                     break;
                 default:
-                    throw new Exception("Robot Factory can create only small and large shapes");
+                    throw new Exception("Robot Factory can create only king and queen robots.");
             }
         }
         return robotCategory;

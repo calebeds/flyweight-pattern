@@ -1,33 +1,45 @@
 import factory.RobotFactory;
+import robots.Robot;
 import robots.RobotInterface;
+
+import java.util.Random;
 
 public class Client {
     public static void main(String[] args) throws Exception {
         RobotFactory robotFactory = new RobotFactory();
         System.out.println("\n***Flyweight Pattern Example***\n");
 
-        RobotInterface shape = robotFactory.getRobotFromFactory("small");
-        shape.print();
+        Robot shape;
 
-        //Here we are trying to get the objects additional 2 times.
-        // Note that from now onward we do not need to create additional small robots as we have already created
+
+        //Here we are trying to get 3 king type robots
         for(int i = 0; i < 2; i++) {
-            shape = robotFactory.getRobotFromFactory("small");
+            shape = (Robot) robotFactory.getRobotFromFactory("king");
+            shape.setColor(getRandomColor());
+            shape.print();
+        }
+
+        //Here we are trying to get 3 queen type robots
+        for(int i = 0; i < 2; i++) {
+            shape = (Robot) robotFactory.getRobotFromFactory("queen");
+            shape.setColor(getRandomColor());
             shape.print();
         }
 
         int numOfDistinctRobots = robotFactory.totalObjectsCreated();
-        System.out.println("\nDistinct Robot Objects Created Till Now: " + numOfDistinctRobots);
+        System.out.println("\nFinally number of distinct robot objects created: " + numOfDistinctRobots);
 
-        //Here we are trying to get the objects 5 times.
-        // Note that the second time onward we do not need to create additional large robots
-        // as we have already created this category in the first attempt (at i = 0)
-        for(int i = 0; i < 5; i++) {
-            shape = robotFactory.getRobotFromFactory("large");
-            shape.print();
+    }
+
+    private static String getRandomColor() {
+        Random r = new Random();
+
+        int random = r.nextInt(20);
+
+        if(random % 2 == 0) {
+            return "red";
+        } else {
+            return "green";
         }
-
-        numOfDistinctRobots = robotFactory.totalObjectsCreated();
-        System.out.println("\nFinally number of Distinct Robot Objects Created: " + numOfDistinctRobots);
     }
 }
